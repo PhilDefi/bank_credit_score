@@ -6,7 +6,6 @@ mlruns/
 
 # Notebooks Jupyter
 *.ipynb
-!Projet7v2.ipynb
 
 # Fichiers lourds ou temporaires
 *.csv
