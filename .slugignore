@@ -1,0 +1,9 @@
+model.pkl
+MLmodel
+conda.yaml
+python_env.yaml
+*.csv
+*.parquet
+*.ipynb
+__pycache__/
+*.log
