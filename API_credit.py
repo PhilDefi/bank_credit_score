@@ -18,12 +18,16 @@ import json
 # Create an FastAPI instance
 app = FastAPI(title="Loan Default Prediction API")
 
-# Define MLFlow tracking server location
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+#########################################################################
+# # Define MLFlow tracking server location
+# mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
-# Load best model from MLflow
-model_uri = "runs:/e46c6c3acae346f5b7f2189a3d35def3/Master_Model"
-model = mlflow.sklearn.load_model(model_uri)
+# # Load best model from MLflow
+# model_uri = "runs:/e46c6c3acae346f5b7f2189a3d35def3/Master_Model"
+# model = mlflow.sklearn.load_model(model_uri)
+
+model = mlflow.sklearn.load_model("model")
+
 
 # ########################################################################
 # # Load variable type of main dataset
