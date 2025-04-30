@@ -1,0 +1,27 @@
+# Dossiers à ignorer
+__pycache__/
+.ipynb_checkpoints/
+data/
+mlruns/
+
+# Notebooks Jupyter
+*.ipynb
+!Projet7v2.ipynb
+
+# Fichiers lourds ou temporaires
+*.csv
+*.db
+*.zip
+*.png
+*.joblib
+*.pkl
+*.h5
+
+# Environnements virtuels
+env/
+.venv/
+venv/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
