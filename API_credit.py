@@ -2,7 +2,6 @@
 # Return model class 0 and class 1 probabilities
 
 from fastapi import FastAPI, HTTPException
-import mlflow.pyfunc
 import mlflow
 
 # On Anaconda command prompt :
