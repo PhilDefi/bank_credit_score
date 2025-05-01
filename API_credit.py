@@ -6,6 +6,7 @@ import mlflow
 import mlflow.sklearn
 from pydantic import BaseModel
 from typing import List
+import pandas as pd
 
 # On Anaconda command prompt :
 # cd documents/python/projets/projet_7
@@ -315,8 +316,8 @@ def predict_shape(request: PredictRequest):
 @app.post("/predict")
 async def predict(request: PredictRequest):
     # Print request content for checking
-    #print(request.data)
-    #print(request.columns)
+    print(request.data)
+    print(request.columns)
 
     # Convert the input data to a pandas DataFrame
     df_post = pd.DataFrame(data=request.data, columns=request.columns)        
