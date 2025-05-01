@@ -305,7 +305,7 @@ def root():
     return {"message": "API is running!!!"}   
 
 class PredictRequest(BaseModel):
-    data: List[List[float]]
+    data: List[List[str]]
     columns: List[str]
 
 @app.post("/data_shape")
