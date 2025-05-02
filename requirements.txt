@@ -5,3 +5,4 @@ uvicorn==0.34.0
 scikit-learn==1.5.2
 pydantic==2.11.3
 python-multipart==0.0.9
+pytest==8.3.5
