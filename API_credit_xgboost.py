@@ -1,4 +1,4 @@
-# Inference server MLFlow + Fast API
+# Inference server MLFlow + Fast API #
 # Return model class 0 and class 1 probabilities
 
 from fastapi import FastAPI, HTTPException
