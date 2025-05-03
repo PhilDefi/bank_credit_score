@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from API_credit import app  # Assure-toi que le nom du fichier est API_credit.py
+from API_credit import app 
 
 client = TestClient(app)
 
