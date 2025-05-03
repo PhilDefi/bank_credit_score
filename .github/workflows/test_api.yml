@@ -29,7 +29,7 @@ jobs:
           pytest test_API_credit.py --maxfail=1 --disable-warnings -q
 
   deploy:
-    needs: test  # Only run this job if the 'test' job succeeds
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -39,12 +39,16 @@ jobs:
       - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
+          export PATH="/usr/local/bin:$PATH"
 
-      - name: Deploy to Heroku
+      - name: Add Heroku remote and push
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         run: |
-          echo $HEROKU_API_KEY | heroku auth:token
-          heroku git:remote -a $HEROKU_APP_NAME
+          echo -e "machine api.heroku.com\n  login heroku\n  password $HEROKU_API_KEY" > ~/.netrc
+          echo -e "machine git.heroku.com\n  login heroku\n  password $HEROKU_API_KEY" >> ~/.netrc
+          chmod 600 ~/.netrc
+
+          git remote add heroku https://git.heroku.com/${HEROKU_APP_NAME}.git
           git push heroku main --force
