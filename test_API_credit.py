@@ -613,7 +613,8 @@ def test_predict_endpoint():
     prediction = result["predictions"][0]
 
     # Expected prediction from the model for the input data
-    expected_prediction = [0.5014562771557, 0.49854372284430004]
+    #expected_prediction = [0.5014562771557, 0.49854372284430004]
+    expected_prediction = [0.46441368775378855, 0.5355863122462114]
     tolerance = 1e-5  # Acceptable error margin for float comparison
 
     # Check that each predicted probability equals to the expected value

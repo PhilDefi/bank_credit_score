@@ -16,7 +16,7 @@ import pandas as pd
 app = FastAPI(title="Loan Default Prediction API")
 
 # Chargement du modèle depuis le dossier local
-model = mlflow.sklearn.load_model("model_LGBM_heroku")
+model = mlflow.sklearn.load_model("model_heroku")
 
 dtypes_loaded = {'SK_ID_CURR': 'int64',
  'NAME_CONTRACT_TYPE': 'int32',
