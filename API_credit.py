@@ -386,15 +386,15 @@ async def predict_with_explanation(request: PredictRequest):
     print("SHAP VALUES : ", shap_values)
 
     # Step 7: Generate waterfall plot (for 1st row)
-#    shap.plots.waterfall(shap_values[0], show=False)
-#    buf = io.BytesIO()
-#    plt.savefig(buf, format="png", bbox_inches="tight")
-#    plt.close()
-#    buf.seek(0)
-#    shap_img_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+    shap.plots.waterfall(shap_values[0], show=False)
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png", bbox_inches="tight")
+    plt.close()
+    buf.seek(0)
+    shap_img_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
 
     # Step 8: Return probability + image
     return {
         "probability_default": probability,
-#        "shap_waterfall_plot": shap_img_base64
+        "shap_waterfall_plot": shap_img_base64
     }
