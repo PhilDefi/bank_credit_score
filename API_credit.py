@@ -376,16 +376,16 @@ async def predict_with_explanation(request: PredictRequest):
     # Preprocess input
     df_post_processed = preprocess.transform(df_post)
 
-    # Step 5: Predict probability
+    # Predict probability
     probability = classifier.predict_proba(df_post_processed)[0, 1]
 
-    # Step 6: SHAP local explanation
+    # SHAP local explanation
     explainer = shap.Explainer(classifier)
     shap_values = explainer(df_post_processed)
-
+    shap_values.feature_names = df_post.columns.tolist()
     print("SHAP VALUES : ", shap_values)
 
-    # Step 7: Generate waterfall plot (for 1st row)
+    # Generate waterfall plot
     shap.plots.waterfall(shap_values[0], show=False)
     buf = io.BytesIO()
     plt.savefig(buf, format="png", bbox_inches="tight")
@@ -393,7 +393,6 @@ async def predict_with_explanation(request: PredictRequest):
     buf.seek(0)
     shap_img_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
 
-    # Step 8: Return probability + image
     return {
         "probability_default": probability,
         "shap_waterfall_plot": shap_img_base64

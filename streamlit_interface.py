@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import numpy as np
+from IPython.display import Image, display
+import base64
+from PIL import Image
+import io
+
 
 # cd documents/python/projets/projet_7
 # streamlit run streamlit_interface.py
@@ -33,27 +38,27 @@ payload = X_sample.to_dict(orient="split")
 payload.pop('index', None)
 
 # Heroku server API URL
-url = "https://app-heroku-credit-p7-a25edceb2cf8.herokuapp.com/predict"
+url = "https://app-heroku-credit-p7-a25edceb2cf8.herokuapp.com/predict_with_explanation"
 
 # POST API request
 response = requests.post(url, json=payload)
 
 
 # Create two tabs
-tab1, tab2 = st.tabs(["📊 Prediction Chart", "📄 Loan Details"])
+tab1, tab2, tab3 = st.tabs(["📊 Prediction Chart", "🔍 Loan Details", "❓ Explanation"])
 
 # --- Tab 1: Pie Chart ---
 with tab1:
     # Result from API
     if response.status_code == 200:
-        probs = response.json()["predictions"][0]
+        probs = response.json()["probability_default"]
         print("Predictions:", probs)    
         
         # Pie chart
         fig, ax = plt.subplots(figsize=(6, 6))      
         labels = ['No Default', 'Default']        
         colors = ['green', 'red']
-        ax.pie(probs, labels=labels, autopct='%1.1f%%', colors=colors, startangle=140)
+        ax.pie([1-probs, probs], labels=labels, autopct='%1.1f%%', colors=colors, startangle=140)
         ax.set_title("Loan Default Probability")
         ax.axis('equal')  # cercle parfait
         
@@ -71,4 +76,16 @@ with tab2:
     st.write(f"Annuity : {X_test.loc[row, 'AMT_ANNUITY']:,.0f}$")
     st.write(f"Good price amount : {X_test.loc[row, 'AMT_GOODS_PRICE']:,.0f}$")
     st.write(f"Total income : {X_test.loc[row, 'AMT_INCOME_TOTAL']:,.0f}$")    
+
+
+# --- Tab 3: SHAP interpretation ---
+with tab3:
+    st.subheader("Explanation")
+    st.info("This section provides SHAP interpretability to explain the model's prediction for the submitted loan application.")
+    if response.status_code == 200:
+        shap_img_base64 = response.json()["shap_waterfall_plot"]
+        img_bytes = base64.b64decode(shap_img_base64)
+        shap_image = Image.open(io.BytesIO(img_bytes))
+        st.image(shap_image, caption="SHAP Waterfall Explanation")
+
 
