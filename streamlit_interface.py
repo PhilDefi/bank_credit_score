@@ -6,7 +6,7 @@ import json
 import numpy as np
 
 # cd documents/python/projets/projet_7
-# streamli run streamlit_intreface.py
+# streamlit run streamlit_interface.py
 
 # Load CSV modified test file with correct variable type
 with open('./data/dtypes_enriched.json', 'r') as f:

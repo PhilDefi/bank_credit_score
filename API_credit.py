@@ -8,6 +8,15 @@ from pydantic import BaseModel
 from typing import List
 import pandas as pd
 
+#new
+import shap
+import io
+import base64
+import matplotlib.pyplot as plt
+
+
+
+
 # On Anaconda command prompt :
 # cd documents/python/projets/projet_7
 # uvicorn API_credit:app --port 8000
@@ -17,6 +26,9 @@ app = FastAPI(title="Loan Default Prediction API")
 
 # Chargement du modèle depuis le dossier local
 model = mlflow.sklearn.load_model("model_LGBM_heroku")
+
+
+
 
 dtypes_loaded = {'SK_ID_CURR': 'int64',
  'NAME_CONTRACT_TYPE': 'int32',
@@ -343,3 +355,46 @@ async def predict(request: PredictRequest):
     # Return the predictions in the response
     predictions_list = predictions.tolist()
     return {"predictions": predictions_list}
+
+
+@app.post("/predict_with_explanation")
+async def predict_with_explanation(request: PredictRequest):
+    # Convert the input data to a pandas DataFrame
+    df_post = pd.DataFrame(data=request.data, columns=request.columns)        
+    
+    # Convert columns to the specified data types
+    for col, dtype in dtypes_loaded.items():
+        if dtype == "bool":
+            df_post[col] = df_post[col].map({'True': True, 'False': False})
+        else:
+            df_post[col] = df_post[col].astype(dtype)
+
+    # Get preprocessing and model from pipeline
+    preprocess = model.named_steps['pipeline']  # from make_pipeline
+    classifier = model.named_steps['lgbmclassifier']
+
+    # Preprocess input
+    df_post_processed = preprocess.transform(df_post)
+
+    # Step 5: Predict probability
+    probability = classifier.predict_proba(df_post_processed)[0, 1]
+
+    # Step 6: SHAP local explanation
+    explainer = shap.Explainer(classifier)
+    shap_values = explainer(df_post_processed)
+
+    print("SHAP VALUES : ", shap_values)
+
+    # Step 7: Generate waterfall plot (for 1st row)
+#    shap.plots.waterfall(shap_values[0], show=False)
+#    buf = io.BytesIO()
+#    plt.savefig(buf, format="png", bbox_inches="tight")
+#    plt.close()
+#    buf.seek(0)
+#    shap_img_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
+
+    # Step 8: Return probability + image
+    return {
+        "probability_default": probability,
+#        "shap_waterfall_plot": shap_img_base64
+    }
