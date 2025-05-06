@@ -1,20 +1,30 @@
-# Bank Credit Score 🏦📊
+# 🏦 Credit Loan Repayment Prediction
 
-Ce projet a pour objectif de prédire la capacité d'un client à rembourser un crédit bancaire à partir de ses données personnelles et financières.
+A full-stack data science project to predict whether a bank loan will be repaid, using a trained machine learning model served via an API. Users can interact with the model through a user-friendly web interface built with Streamlit.
 
-## 📁 Fichier principal
+---
 
-- `Project7v2.ipynb` : Notebook Jupyter contenant le code d'analyse, le pré-traitement des données et la modélisation.
+## 🚀 Project Overview
 
-## 🔍 Objectifs
+This project uses a machine learning model trained on credit application data to predict the probability of loan repayment. It provides:
 
-- Étudier les critères influençant l'octroi de crédit.
-- Construire un modèle de machine learning pour prédire la probabilité de défaut.
-- Estimer la probabilité que le crédit soit bien remboursé
+- A RESTful API to serve predictions (`FastAPI`, deployed on Heroku)
+- A web interface for CSV upload and prediction (`Streamlit`)
+- Versioned model management using `MLflow`
 
-## 🧰 Technologies utilisées
+---
 
-- Python (pandas, numpy, scikit-learn, matplotlib, seaborn, etc.)
-- Jupyter Notebook
-- Git / GitHub
+## 🧠 Model Pipeline
 
+The model was trained on historical loan data with features such as:
+- Applicant income
+- Loan amount
+- Credit history
+- Employment status
+- ...
+
+Pipeline includes:
+- Preprocessing (imputation, encoding, scaling)
+- Class imbalance handling (e.g., SMOTE)
+- Model training (XGBoost, AdaBoost, LightGBM)
+- Evaluation (F1-score, customized score, ROC AUC, SHAP explainability)

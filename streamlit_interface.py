@@ -44,7 +44,7 @@ url = "https://app-heroku-credit-p7-a25edceb2cf8.herokuapp.com/predict_with_expl
 response = requests.post(url, json=payload)
 
 
-# Create two tabs
+# Create three tabs
 tab1, tab2, tab3 = st.tabs(["📊 Prediction Chart", "🔍 Loan Details", "❓ Explanation"])
 
 # --- Tab 1: Pie Chart ---
