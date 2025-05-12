@@ -31,7 +31,7 @@ Pipeline includes:
 
 ---
 
-## ! Files and Folder organiosation
+## ! Files and Folder organisation
 - Project7V2.ipynb : main Jupyter notebook
 - API_credit.py : API for requesting model on the Heroku server
 - streamlit_interface.py : Streamlit end-user interface for credit prediction
