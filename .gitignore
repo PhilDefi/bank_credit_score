@@ -23,3 +23,9 @@ venv/
 # Fichiers système
 .DS_Store
 Thumbs.db
+
+# Copied files
+Deflandre_Philippe_1_API_052025.py
+Deflandre_Philippe_5_application_streamlit_052025.py
+Deflandre_Philippe_4_Tableau_HTML_data_drift_evidently_052025.html
+file.html

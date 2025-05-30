@@ -8,13 +8,10 @@ from pydantic import BaseModel
 from typing import List
 import pandas as pd
 
-#new
 import shap
 import io
 import base64
 import matplotlib.pyplot as plt
-
-
 
 
 # On Anaconda command prompt :
@@ -24,10 +21,8 @@ import matplotlib.pyplot as plt
 # Create an FastAPI instance
 app = FastAPI(title="Loan Default Prediction API")
 
-# Chargement du modèle depuis le dossier local
+# Load model from model folder on GitHub (the GitHub repository is connected to Heroku)
 model = mlflow.sklearn.load_model("model_LGBM_heroku")
-
-
 
 
 dtypes_loaded = {'SK_ID_CURR': 'int64',
@@ -313,6 +308,7 @@ dtypes_loaded = {'SK_ID_CURR': 'int64',
  'DAYS_EMPLOYED_PERCENT': 'float64'}
 
 
+# Test simple GET API
 @app.get("/")
 def root():
     return {"message": "API is running!!!"}   
@@ -321,10 +317,14 @@ class PredictRequest(BaseModel):
     data: List[List[str]]
     columns: List[str]
 
+
+# Test POST API that returns the shape of the input data
 @app.post("/data_shape")
 def predict_shape(request: PredictRequest):
     return {"message": "Received your request!", "data_shape": [len(request.data), len(request.columns)]}
 
+
+# API that returns the prediction
 @app.post("/predict")
 async def predict(request: PredictRequest):
     # Print request content for checking
@@ -357,6 +357,7 @@ async def predict(request: PredictRequest):
     return {"predictions": predictions_list}
 
 
+# API that returns the prediction together with the SHAP interpretability, as a waterfall plot image
 @app.post("/predict_with_explanation")
 async def predict_with_explanation(request: PredictRequest):
     # Convert the input data to a pandas DataFrame
