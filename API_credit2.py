@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from typing import List
 import pandas as pd
 import json
+import time
 
 import shap
 import io
@@ -39,6 +40,19 @@ dtypes_loaded.pop('TARGET', None)
 @app.get("/")
 def root():
     return {"message": "API2 is running!!!"}   
+
+@app.get("/info")
+def api_info():
+    return {
+        "api_name": "Loan Default Prediction API",
+        "api_version": "2",
+        "model_name": "LightGBM Classifier",
+        "training_dataset": "clean_dataset_final_v2.csv",
+        "features_count": len(dtypes_loaded),
+        "deployment_time": datetime.datetime.utcnow().isoformat() + "Z",
+        "author": "PhilDefi"
+    }
+
 
 class PredictRequest(BaseModel):
     data: List[List[str]]
