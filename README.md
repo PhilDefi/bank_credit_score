@@ -28,3 +28,13 @@ Pipeline includes:
 - Class imbalance handling (e.g., SMOTE)
 - Model training (XGBoost, AdaBoost, LightGBM)
 - Evaluation (F1-score, customized score, ROC AUC, SHAP explainability)
+
+---
+
+## ! Files and Folder organisation
+- Project7V2.ipynb : main Jupyter notebook
+- API_credit.py : API for requesting model on the Heroku server
+- streamlit_interface.py : Streamlit end-user interface for credit prediction
+- /model /model_LGBM_Heroku : folder containing previous prediction models
+- /model_heroku : folder containing the final prediction model
+- .github/workflows/ : GitHubActions folder, including .yml configuration file
